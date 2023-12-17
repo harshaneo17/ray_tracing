@@ -13,8 +13,8 @@ int main() {
     for (int j = 0; j < image_height; ++j){
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         for (int i = 0; i < image_width; ++i){
-            auto pixel_color = color(float(i)/(image_width-1),float(j)/(image_height-1),0);
-            write_color(std::cout, pixel_color);
+            auto pixel_color = color(float(i)/(image_width-1),float(j)/(image_height-1),0); //color is vec3 object with 3 parameters going in constructor
+            write_color(std::cout, pixel_color); //this method is described in color.hpp
             // static_cast<target type> (expression)
             /*std::flush is a stream manipulator to display the content of the stream. 
             Normally, a stream can wait until a good moment (the end of the program, for example), std::flush enforces a direct output. std::cout is a stream that one might want to flush, 
