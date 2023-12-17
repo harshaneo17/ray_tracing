@@ -1,2 +1,5 @@
-./src/main.exe
-./src/image.ppm
+*.exe
+*.ppm
+
+/src/main.exe
+/src/image.ppm
