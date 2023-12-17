@@ -17,12 +17,11 @@ so if there are definitions within that file, you will get a compiler error tell
 read more here https://shorturl.at/diHV2
 */
 
-class vec3 {
+class Vec3 {
   public :
     float e[3]; //e is an arrya of 3 elements of float
 
-    vec3() : e{0,0,0} {} //constructor 1 to create vec3 with all components to zero
-    vec3(float e0, float e1, float e2) : e{e0, e1, e2} {} // another constructor is provided that takes three floats as parameters
+    
 
     float x() const {
          return e[0]; 
@@ -36,8 +35,8 @@ class vec3 {
          return e[2];
     }
 
-    vec3 operator-() const {
-        return vec3(-e[0], -e[1], -e[2]); 
+    Vec3 operator-() const {
+        return Vec3(-e[0], -e[1], -e[2]); 
     }
 
     float operator[](int i) const { 
@@ -48,21 +47,21 @@ class vec3 {
         return e[i];
     }
 
-    vec3& operator+=(const vec3 &v) {
+    Vec3& operator+=(const Vec3 &v) {
         e[0] += v.e[0];
         e[1] += v.e[1];
         e[2] += v.e[2];
         return *this;
     }
 
-    vec3& operator*=(float t){
+    Vec3& operator*=(float t){
         e[0] *= t;
         e[1] *= t;
         e[2] *= t;
         return *this;
     }
 
-    vec3& operator/=(float t) {
+    Vec3& operator/=(float t) {
         return *this *= 1/t;
     }
 
@@ -75,54 +74,61 @@ class vec3 {
     } 
 };
 
+/*I like describing class constructors outside class because why not? */
+
+
+Vec3::Vec3() : e{0,0,0} {} //constructor 1 to create Vec3 with all components to zero
+Vec3::Vec3(float e0, float e1, float e2) : e{e0, e1, e2} {} // another constructor is provided that takes three floats as parameters
+
+
 /* 
-Create alias for vec3, since this class serves two purposes, 
+Create alias for Vec3, since this class serves two purposes, 
 it becomes easy to differentiate which one is what in source code
 */
 
-using point3 = vec3;
+using Point3 = Vec3;
 
 //Utility Global functions
 
 /*Vector operations of dot and cross products along with operator overloading
 Operator overloading means dunder methods like editing what an operator would do
-in this case its the vec3 object being added, subtracted or multiplied using these functions*/
+in this case its the Vec3 object being added, subtracted or multiplied using these functions*/
 
-inline std::ostream& operator<<(std::ostream &out, const vec3 &v) {
+inline std::ostream& operator<<(std::ostream &out, const Vec3 &v) {
     return out << v.e[0] << ' ' << v.e[1] << ' ' << v.e[2]; 
 }
 
-inline vec3 operator+(const vec3 &u, const vec3 &v) {
-    return vec3(u.e[0] + v.e[0], u.e[1] + v.e[1], u.e[2] + v.e[2]);
+inline Vec3 operator+(const Vec3 &u, const Vec3 &v) {
+    return Vec3(u.e[0] + v.e[0], u.e[1] + v.e[1], u.e[2] + v.e[2]);
 }
 
-inline vec3 operator-(const vec3 &u, const vec3 &v) {
-    return vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
+inline Vec3 operator-(const Vec3 &u, const Vec3 &v) {
+    return Vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
 }
 
-inline vec3 operator*(const vec3 &u, const vec3 &v) {
-    return vec3(u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]);
+inline Vec3 operator*(const Vec3 &u, const Vec3 &v) {
+    return Vec3(u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]);
 }
 
-inline vec3 operator*(float t, const vec3 &v) {
-    return vec3(t*v.e[0], t*v.e[1], t*v.e[2]);
+inline Vec3 operator*(float t, const Vec3 &v) {
+    return Vec3(t*v.e[0], t*v.e[1], t*v.e[2]);
 }
 
-inline vec3 operator/(vec3 v, float t){
+inline Vec3 operator/(Vec3 v, float t){
     return (1/t) * v;
 }
 
-inline float dot(const vec3 &u, const vec3 &v){
+inline float dot(const Vec3 &u, const Vec3 &v){
     return u.e[0] * v.e[0] + u.e[1] * v.e[1] + u.e[2] * v.e[2]; 
 }
 
-inline vec3 cross(const vec3 &u, const vec3 &v){
-    return vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
+inline Vec3 cross(const Vec3 &u, const Vec3 &v){
+    return Vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
                 u.e[2] * v.e[0] - u.e[0] * v.e[2],
                 u.e[0] * v.e[1] - u.e[1] * v.e[0]);
 }
 
-inline vec3 unit_vector(vec3 v) {
+inline Vec3 unit_vector(Vec3 v) {
     return v / v.length();
 }
 
