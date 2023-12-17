@@ -1,5 +1,5 @@
-#ifndef VEC3_H
-#define VEC3_H
+#ifndef VEC3_HPP
+#define VEC3_HPP
 
 #include <cmath>
 #include <iostream>
@@ -22,7 +22,7 @@ class vec3 {
     float e[3]; //e is an arrya of 3 elements of float
 
     vec3() : e{0,0,0} {} //constructor 1 to create vec3 with all components to zero
-    vec3(float e0, float e1, float e2) : e{e0, e1, e3} {} // another constructor is provided that takes three floats as parameters
+    vec3(float e0, float e1, float e2) : e{e0, e1, e2} {} // another constructor is provided that takes three floats as parameters
 
     float x() const {
          return e[0]; 
@@ -44,7 +44,7 @@ class vec3 {
         return e[i];
     }
 
-    float& operator[](int) {
+    float& operator[](int i) {
         return e[i];
     }
 
