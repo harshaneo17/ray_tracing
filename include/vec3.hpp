@@ -7,10 +7,10 @@
 
 class vec3 {
   public :
-    double e[3]; //what is this?
+    double e[3]; //e is an arrya of 3 elements of double
 
-    vec3() : e{0,0,0} {}
-    vec3(double e0, double e1, double e2) : e{e0, e1, e3} {}
+    vec3() : e{0,0,0} {} //constructor 1 to create vec3 with all components to zero
+    vec3(double e0, double e1, double e2) : e{e0, e1, e3} {} // another constructor is provided that takes three doubles as parameters
 
     double x() const {
          return e[0]; 
@@ -19,7 +19,7 @@ class vec3 {
     double y() const {
          return e[1]; 
     }
-    
+
     double z() const {
          return e[2];
     }
@@ -63,3 +63,53 @@ class vec3 {
     } 
 };
 
+/* 
+Create alias for vec3, since this class serves two purposes, 
+it becomes easy to differentiate which one is what in source code
+*/
+
+using point3 = vec3;
+
+//Utility Global functions
+
+/*Vector operations of dot and cross products along with operator overloading
+Operator overloading means dunder methods like editing what an operator would do
+in this case its the vec3 object being added, subtracted or multiplied using these functions*/
+
+inline std::ostream& operator<<(std::ostream &out, const vec3 &v) {
+    return out << v.e[0] << ' ' << v.e[1] << ' ' << v.e[2]; 
+}
+
+inline vec3 operator+(const vec3 &u, const vec3 &v) {
+    return vec3(u.e[0] + v.e[0], u.e[1] + v.e[1], u.e[2] + v.e[2]);
+}
+
+inline vec3 operator-(const vec3 &u, const vec3 &v) {
+    return vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
+}
+
+inline vec3 operator*(const vec3 &u, const vec3 &v) {
+    return vec3(u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]);
+}
+
+inline vec3 operator*(double t, const vec3 &v) {
+    return vec3(t*v.e[0], t*v.e[1], t*v.e[2]);
+}
+
+inline vec3 operator/(vec3 v, double t){
+    return (1/t) * v;
+}
+
+inline double dot(const vec3 &u, const vec3 &v){
+    return u.e[0] * v.e[0] + u.e[1] * v.e[1] + u.e[2] * v.e[2]; 
+}
+
+inline vec3 cross(const vec3 &u, const vec3 &v){
+    return vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
+                u.e[2] * v.e[0] - u.e[0] * v.e[2],
+                u.e[0] * v.e[1] - u.e[1] * v.e[0]);
+}
+
+inline vec3 unit_vector(vec3 v) {
+    return v / v.length();
+}
