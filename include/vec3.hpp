@@ -21,7 +21,8 @@ class Vec3 {
   public :
     float e[3]; //e is an arrya of 3 elements of float
 
-    
+    Vec3() : e{0,0,0} {} //constructor 1 to create Vec3 with all components to zero
+    Vec3(float e0, float e1, float e2) : e{e0, e1, e2} {} // another constructor is provided that takes three floats as parameters
 
     float x() const {
          return e[0]; 
@@ -73,13 +74,6 @@ class Vec3 {
         return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
     } 
 };
-
-/*I like describing class constructors outside class because why not? */
-
-
-Vec3::Vec3() : e{0,0,0} {} //constructor 1 to create Vec3 with all components to zero
-Vec3::Vec3(float e0, float e1, float e2) : e{e0, e1, e2} {} // another constructor is provided that takes three floats as parameters
-
 
 /* 
 Create alias for Vec3, since this class serves two purposes, 
