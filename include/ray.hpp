@@ -16,7 +16,7 @@ as a function that we'll call ray::at(t)*/
 class Ray {
 
   public:
-    
+       
     Ray() {}
 
     Ray(const Point3& origin, const Vec3& direction) : orig(origin), dir(direction) {}
