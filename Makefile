@@ -1,5 +1,5 @@
 build:
-	g++ -o main -I /include ppm_image.cpp
+	g++ -o main -I /include /src/ppm_image.cpp
 clean:
-	$(RM) main
+	$(RM) /src/main
 
