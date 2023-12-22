@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Change wrapper permissions
+    - name: Change configure permissions
       run: chmod +x ./configure
     - name: configure
       run: ./configure
