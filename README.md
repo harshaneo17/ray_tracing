@@ -1,7 +1,9 @@
 # ray_tracing
 ray tracing in cpp
 
-ray tracing library implementation in c++
+ray tracing library implementation in c++. 
+
+plan to use multiple shapes
 
 https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html
 
