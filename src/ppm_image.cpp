@@ -3,7 +3,7 @@
 #include "vec3.hpp"
 
 #include <iostream>
-bool hit_sphere(const Point3& center, double radius, const Ray& r){
+float hit_sphere(const Point3& center, double radius, const Ray& r){
     /*This function calculates a,b,c to determine the discriminant and find out if the 
     quadratic equation of sphere and ray has any roots. If it does then we know for certain that 
     there is a ray projected onto that sphere. otherwise it just passes by. The factor by which 
@@ -12,17 +12,33 @@ bool hit_sphere(const Point3& center, double radius, const Ray& r){
     but its rather expansive and out of documentation scope. this shall be therefore covered in a video*/
      Vec3 oc = r.origin() - center;
      auto a = dot(r.direction(),r.direction());
-     auto b = 2.0 * dot(oc,r.direction());
+     auto b = 2 * dot(oc,r.direction());
      auto c = dot(oc, oc) - radius*radius;
      auto discriminant = b*b - 4*a*c;
-     return (discriminant >= 0);
+     
+     if (discriminant < 0){
+        return -1.0;
+     } 
+     else{
+        return (-b - std::sqrt(discriminant)) / (2*a);
+     }
 }
 
 
 Color ray_color(const Ray& r){
-    if (hit_sphere(Point3(0,0,-1),0.5,r)){
-        return Color(-244,0,0);
+    /*
+    color of ray. each pixel coordinate corresponding to a Color object which is multiplied with 255
+    to ensure the color values are normalized. Not sure what normalized means here but ill come back to this.
+    This method has certain conditions like hit_sphere and  color gradient for whole image. 
+    Hit sphere also draws a sphere and highlights the parts where ray pixels intersect with it. 
+    read above function
+    */
+    float t = hit_sphere(Point3(0,0,-1),0.5,r);
+    if (t > 0.0){
+       Vec3 normal = unit_vector(r.at(t) - Vec3(0,0,-1));
+       return 0.5 * Color(normal.x()+1,normal.y(),normal.z()); //normal(x,y,z) correspond to r,g,b
     }
+   
     Vec3 unit_direction = unit_vector(r.direction());
     auto a = 0.5*(unit_direction.y()+1.0);
     return (1.0-a)*Color(1.0,1.0,1.0)+a*Color(0.5,0.7,1.0);
