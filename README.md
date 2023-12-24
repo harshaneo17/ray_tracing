@@ -18,3 +18,6 @@ https://thoughtbot.com/blog/the-magic-behind-configure-make-make-install
    g++ -o main -I C:\Users\ASUS\Documents\cpp_projects\ray_tracing\include ppm_image.cpp
 
 ```
+
+
+![plot](./ray_tracing.png)
