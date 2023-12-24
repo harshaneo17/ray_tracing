@@ -4,6 +4,12 @@
 
 #include <iostream>
 bool hit_sphere(const Point3& center, double radius, const Ray& r){
+    /*This function calculates a,b,c to determine the discriminant and find out if the 
+    quadratic equation of sphere and ray has any roots. If it does then we know for certain that 
+    there is a ray projected onto that sphere. otherwise it just passes by. The factor by which 
+    a ray is project onto sphere is "t" this is the coordinate of intersection of the ray and the sphere
+    This function returns true if "t" exists on the sphere. A geometric proof is available on the OG website
+    but its rather expansive and out of documentation scope. this shall be therefore covered in a video*/
      Vec3 oc = r.origin() - center;
      auto a = dot(r.direction(),r.direction());
      auto b = 2.0 * dot(oc,r.direction());
