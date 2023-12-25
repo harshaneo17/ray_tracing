@@ -35,8 +35,8 @@ Color ray_color(const Ray& r){
     */
     float t = hit_sphere(Point3(0,0,-1),0.5,r);
     if (t > 0.0){
-       Vec3 normal = unit_vector(r.at(t) - Vec3(0,0,-1));
-       return 0.5 * Color(normal.x()+1,normal.y(),normal.z()); //normal(x,y,z) correspond to r,g,b
+       Vec3 perp = unit_vector(r.at(t) - Vec3(0,0,-1));
+       return 0.5 * Color(perp.x()+1,perp.y(),perp.z()); //normal(x,y,z) correspond to r,g,b
     }
    
     Vec3 unit_direction = unit_vector(r.direction());
