@@ -28,11 +28,13 @@ https://stackoverflow.com/questions/11021452/how-do-redirect-stdout-out-of-xcode
 ```
 
  cmake -S <path to source> -B <path to build>
- cmake --build ./build --config Release (windows) 
+ cmake --build ./build --config Release (windows)
+ make -C build/ (linux,mac) 
 
 ```
 
    cmake -S . -B build
+   make -C build/
 
 
 ```
