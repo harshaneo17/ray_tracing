@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION "3.19.2")
 
-#run cmake -S <path to source> -B <path to build>
+#cmake -S <path to source> -B <path to build>
 #cmake --build ./build --config Release (windows)
 
 project("ray_tracing")

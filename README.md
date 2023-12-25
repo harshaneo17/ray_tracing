@@ -27,5 +27,14 @@ https://stackoverflow.com/questions/11021452/how-do-redirect-stdout-out-of-xcode
 
 ```
 
+ cmake -S <path to source> -B <path to build>
+ cmake --build ./build --config Release (windows) 
+
+```
+
+   cmake -S . -B build
+
+
+```
 
 ![plot](./ray_tracing.png)
