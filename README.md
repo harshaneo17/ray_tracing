@@ -1,10 +1,10 @@
-# ray_tracing
-ray tracing in cpp
+# Ray Tracing
 
-ray tracing library implementation in c++. 
+Ray tracing library implementation in c++. 
 
-plan to use multiple shapes
+Plan to use multiple shapes
 
+HELPFUL LINKS 
 
 https://stackoverflow.com/questions/1943276/what-does-do-in-a-c-declaration
 
@@ -19,11 +19,8 @@ cmake --build ./build --config Release (windows)
 make -C build/ (linux,mac) 
 
 ```
-
    cmake -S . -B build
    make -C build/
-
-
 ```
 
 ![plot](./ray_tracing.png)
