@@ -1,5 +1,4 @@
 *.exe
 *.ppm
 
-/src/main.exe
-/src/image.ppm
+build/
