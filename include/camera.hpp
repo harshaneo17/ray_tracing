@@ -65,11 +65,11 @@ class Camera{
 
             //calculate the location of the upper left pixel
             auto viewport_upper_left = camera_center - Vec3(0,0,focal_length) - viewport_u/2 - viewport_v/2;
-            auto pixel_origin = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
+            pixel_origin = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
         }
 
-        Color ray_color(const Ray& r,const Traced& world){
+        Color ray_color(const Ray& r,const Traced& world) const {
         /*
         color of ray. each pixel coordinate corresponding to a Color object which is multiplied with 255
         to ensure the color values are normalized. Not sure what normalized means here but ill come back to this.
