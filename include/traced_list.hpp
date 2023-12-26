@@ -22,13 +22,13 @@ class Traced_List : public Traced {
         objects.push_back(object);
       }
 
-      bool trace(const Ray& r, double ray_tmin, double ray_tmax, TraceRecord& rec) const override {
+      bool trace(const Ray& r, Interval ray_t, TraceRecord& rec) const override {
         TraceRecord temp_rec;
         bool trace_anything = false;
-        auto closest_point_yet = ray_tmax;
+        auto closest_point_yet = ray_t.max;
 
         for (const auto& object : objects){
-            if(object->trace(r, ray_tmin,closest_point_yet,temp_rec)) {
+            if(object->trace(r, Interval(ray_t.min,closest_point_yet),temp_rec)) {
                 trace_anything = true;
                 closest_point_yet = temp_rec.t;
                 rec = temp_rec;

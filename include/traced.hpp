@@ -25,7 +25,7 @@ class Traced {
     public:
       virtual ~Traced() = default;
        
-      virtual bool trace(const Ray& r, double ray_tmin, double ray_tmax, TraceRecord& rec) const = 0;  
+      virtual bool trace(const Ray& r, Interval ray_t, TraceRecord& rec) const = 0;  
 };
 
 #endif

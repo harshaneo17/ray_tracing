@@ -8,7 +8,7 @@ class Sphere : public Traced {
     public:
        Sphere(Point3 _center, double _radius) : center(_center), radius(_radius){}
 
-       bool trace(const Ray& r, double ray_tmin, double ray_tmax, TraceRecord& rec) const override {
+       bool trace(const Ray& r, Interval ray_t, TraceRecord& rec) const override {
             Vec3 oc = r.origin() - center;
             auto a = r.direction().length_squared();
             auto half_b = dot(oc, r.direction());
@@ -21,8 +21,10 @@ class Sphere : public Traced {
             /*previously we did only true or false condition. then we wanted to know the exact values 
             now we are considering closest values to roots as well*/
             auto root = (-half_b - sqrtd) / a;
-            if (root <= ray_tmin || ray_tmax <= root){
-                return false;
+            if (!ray_t.surrounds(root)){
+                root = (-half_b + sqrtd) / a;
+                if (!ray_t.surrounds(root))
+                   return false;
             }
             rec.t = root;
             rec.p = r.ray_equation(rec.t);
