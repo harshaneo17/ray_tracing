@@ -1,9 +1,6 @@
 #ifndef MAINHEADER_HPP
 #define MAINHEADER_HPP
 
-#include "ray.hpp"
-#include "vec3.hpp"
-
 
 #include <cmath>
 #include <limits>
@@ -27,4 +24,8 @@ inline double degrees_to_radians(double degrees){
 //understand why this include is written here instead of the top of this file.
 //modern problems require modern solutions.
 #include "interval.hpp"
+#include "ray.hpp"
+#include "vec3.hpp"
+
+
 #endif
