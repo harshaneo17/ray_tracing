@@ -27,6 +27,6 @@ make -C build/ (linux,mac)
 
 <img src="images/ray_tracing.png" width="800">
 
-#Progress after creating a camera class
+# Progress after creating a camera class
 
 <img src="images/image.jpg" width="800">
