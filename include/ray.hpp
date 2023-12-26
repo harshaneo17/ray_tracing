@@ -29,7 +29,7 @@ class Ray {
         return dir;
     }
 
-    Point3 at(float t) const{
+    Point3 ray_equation(float t) const{
         return orig + t*dir;
     }
 
