@@ -34,3 +34,7 @@ make -C build/ (linux,mac)
 # Progress after creating a camera class
 
 <img src="images/image.jpg" width="800">
+
+# Anti Aliasing
+
+Anti aliasing means decreasings aliasing. Since pixels are rectangle (or) square the objects that have curves on them or splines are difficult to render or they are usually jagged. In order to prevent this anti aliasing techniques are implemented.

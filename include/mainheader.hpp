@@ -23,8 +23,11 @@ inline double degrees_to_radians(double degrees){
 
 inline double random_double(){
     static std::uniform_real_distribution<double> distribution(0.0,1.0); 
-    //IDK how this works 27th Dec 2023
+    //Produces random floating-point values x , uniformly distributed on the interval [a,b), 
+    // that is, distributed according to the probability density function:
+    // P(x|a,b) = 1/b-a
     static std::mt19937 generator;
+    //A Mersenne Twister pseudo-random generator of 32-bit numbers with a state size of 19937 bits.
     return distribution(generator);
 }
 

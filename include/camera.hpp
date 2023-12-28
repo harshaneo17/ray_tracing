@@ -11,6 +11,8 @@ class Camera{
     public:
         double aspect_ratio = 1.0;  // Ratio of image width over height
         int    image_width  = 100;  // Rendered image width in pixel count
+        int    samples_per_pixel = 10; //Count of random samples for each pixel
+
 
         void render(const Traced& world){
             initialize();
@@ -19,11 +21,12 @@ class Camera{
             for (int j = 0; j < image_height; ++j){
                 std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
                 for (int i = 0; i < image_width; ++i){
-                    auto pixel_center = pixel_origin + (i * pixel_delta_u) + (j * pixel_delta_v);
-                    auto ray_direction = pixel_center - camera_center;
-                    Ray r(camera_center, ray_direction);
-                    Color pixel_color = ray_color(r,world);
-                    write_color(std::cout, pixel_color); //this method is described in color.hpp
+                    Color pixel_color(0,0,0);
+                    for (int sample = 0;sample < samples_per_pixel; ++sample){
+                        Ray r = get_ray(i,j);
+                        pixel_color += ray_color(r, world);
+                    }
+                    write_color(std::cout, pixel_color, samples_per_pixel); //this method is described in color.hpp
                 // static_cast<target type> (expression)
                 /*std::flush is a stream manipulator to display the content of the stream. 
                 Normally, a stream can wait until a good moment (the end of the program, for example), std::flush enforces a direct output. std::cout is a stream that one might want to flush, 
@@ -67,6 +70,25 @@ class Camera{
             auto viewport_upper_left = camera_center - Vec3(0,0,focal_length) - viewport_u/2 - viewport_v/2;
             pixel_origin = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
+        }
+
+        Ray get_ray(int i, int j) const {
+            //Get a randomly sampled camera ray for the pixel at location i,j
+
+            auto pixel_center = pixel_origin + (i * pixel_delta_u) + (j * pixel_delta_v);
+            auto pixel_sample = pixel_center + pixel_sample_square();
+
+            auto ray_origin = camera_center;
+            auto ray_direction = pixel_sample - ray_origin;
+
+            return Ray(ray_origin, ray_direction);
+        }
+
+        Vec3 pixel_sample_square() const {
+            //Returns a random point in the square surrounding a pixel at origin
+            auto px = -0.5 + random_double();
+            auto py = -0.5 + random_double();
+            return (px * pixel_delta_u) + (py * pixel_delta_v);
         }
 
         Color ray_color(const Ray& r,const Traced& world) const {
