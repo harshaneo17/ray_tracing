@@ -6,7 +6,7 @@
 
 class Sphere : public Traced {
     public:
-       Sphere(Point3 _center, double _radius) : center(_center), radius(_radius){}
+       Sphere(Point3 _center, double _radius, std::shared_ptr<Material> _material) : center(_center), radius(_radius), mat(_material){}
 
        bool trace(const Ray& r, Interval ray_t, TraceRecord& rec) const override {
             Vec3 oc = r.origin() - center;
@@ -37,6 +37,7 @@ class Sphere : public Traced {
        private:
          Point3 center;
          double radius;
+         std::shared_ptr<Material> mat;
         
 };
 

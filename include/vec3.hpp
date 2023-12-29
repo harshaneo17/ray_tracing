@@ -74,6 +74,12 @@ class Vec3 {
         return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
     }
 
+    bool near_zero() const {
+        //Return true if vector is close to zero in all dimentions
+        auto s = 1e-8;
+        return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
+    }
+
     double magnitude() const {
         /*Makes more sense to call it magnitude*/
         return std::sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);
@@ -161,6 +167,10 @@ inline Vec3 random_on_hemisphere(const Vec3& normal){
         return on_unit_sphere;
     else
         return -on_unit_sphere;
+}
+
+Vec3 reflect(const Vec3& v, const Vec3& n){
+    return v - 2*dot(v,n)*n;
 }
 
 #endif
