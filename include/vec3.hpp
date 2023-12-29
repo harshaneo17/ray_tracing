@@ -72,6 +72,17 @@ class Vec3 {
 
     float length_squared() const {
         return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
+    }
+
+    static Vec3 random(){
+        return Vec3(random_double(),random_double(),random_double());
+    }
+
+    static Vec3 random(double min, double max){
+        /*The is the one of the most basic feature of C++: function overloading. 
+        In C++, it's entirely possible as long as the function function signature is different,
+         ie two functions having the same name but different set of parameters.*/
+        return Vec3(random_double(min,max), random_double(min,max), random_double(min,max));
     } 
 };
 

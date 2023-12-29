@@ -38,3 +38,9 @@ make -C build/ (linux,mac)
 # Anti Aliasing
 
 Anti aliasing means decreasings aliasing. Since pixels are rectangle (or) square the objects that have curves on them or splines are difficult to render or they are usually jagged. In order to prevent this anti aliasing techniques are implemented.
+
+With a single ray through the center of each pixel, we are performing what is commonly called point sampling. The problem with point sampling can be illustrated by rendering a small checkerboard far away. If this checkerboard consists of an 8×8 grid of black and white tiles, but only four rays hit it, then all four rays might intersect only white tiles, or only black, or some odd combination. 
+
+In the real world, when we perceive a checkerboard far away with our eyes, we perceive it as a gray color, instead of sharp points of black and white. That's because our eyes are naturally doing what we want our ray tracer to do: integrate the (continuous function of) light falling on a particular (discrete) region of our rendered image
+
+Diffuse objects that don’t emit their own light merely take on the color of their surroundings, but they do modulate that with their own intrinsic color.They might also be absorbed rather than reflected. The darker the surface, the more likely the ray is absorbed (that’s why it's dark!)
