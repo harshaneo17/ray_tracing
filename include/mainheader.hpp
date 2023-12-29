@@ -31,6 +31,11 @@ inline double random_double(){
     return distribution(generator);
 }
 
+inline double random_double(double min, double max) {
+    // Returns a random real in [min,max).
+    return min + (max-min)*random_double();
+}
+
 //This is the same stupidity as pushing a door that clearly says pull.
 //understand why this include is written here instead of the top of this file.
 //modern problems require modern solutions.
