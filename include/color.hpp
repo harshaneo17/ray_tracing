@@ -7,9 +7,8 @@
 
 using Color = Vec3;
 
-inline double linear_to_gamma(double linear_component)
-{
-    return sqrt(linear_component);
+inline double linear_to_gamma(double linear_component){
+    return std::sqrt(linear_component);
 }
 
 void write_color(std::ostream &out, Color pixel_color, int samples_per_pixel) {
@@ -23,7 +22,8 @@ void write_color(std::ostream &out, Color pixel_color, int samples_per_pixel) {
     g *= scale;
     b *= scale;
 
-    // Apply the linear to gamma transform.
+    //Apply the linear to gamma transform
+    //add this to config as well
     r = linear_to_gamma(r);
     g = linear_to_gamma(g);
     b = linear_to_gamma(b);

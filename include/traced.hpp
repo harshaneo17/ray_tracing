@@ -3,10 +3,13 @@
 
 #include "ray.hpp"
 
+class Material;
+
 class TraceRecord{
     public:
        Point3 p;
        Vec3 normal;
+       std::shared_ptr<Material> mat;
        double t;
        bool front_face;
 
