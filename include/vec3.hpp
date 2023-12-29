@@ -79,11 +79,11 @@ class Vec3 {
         return std::sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);
     }
 
-    static Vec3 random(){
+    static Vec3 random_vec(){
         return Vec3(random_double(),random_double(),random_double());
     }
 
-    static Vec3 random(double min, double max){
+    static Vec3 random_vec(double min, double max){
         /*The is the one of the most basic feature of C++: function overloading. 
         In C++, it's entirely possible as long as the function function signature is different,
          ie two functions having the same name but different set of parameters.*/
@@ -140,7 +140,27 @@ inline Vec3 cross(const Vec3 &u, const Vec3 &v){
 
 inline Vec3 unit_vector(Vec3 v) {
     /*The term normalized vector is sometimes used as a synonym for unit vector*/
-    return v / v.magnitude();
+    return v / v.length();
+}
+
+inline Vec3 random_in_unit_sphere(){
+    while(true){
+        auto p = Vec3::random_vec(-1,1);
+        if (p.length_squared() < 1)
+            return p;
+    }
+}
+
+inline Vec3 random_unit_vector(){
+    return unit_vector(random_in_unit_sphere());
+}
+
+inline Vec3 random_on_hemisphere(const Vec3& normal){
+    Vec3 on_unit_sphere = random_unit_vector();
+    if (dot(on_unit_sphere,normal) > 0.0)
+        return on_unit_sphere;
+    else
+        return -on_unit_sphere;
 }
 
 #endif

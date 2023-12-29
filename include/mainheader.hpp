@@ -3,6 +3,7 @@
 
 
 #include <cmath>
+#include <cstdlib>
 #include <random>
 #include <limits>
 #include <memory>
@@ -21,15 +22,20 @@ inline double degrees_to_radians(double degrees){
     return degrees * pi / 180;
 }
 
-inline double random_double(){
-    static std::uniform_real_distribution<double> distribution(0.0,1.0); 
-    //Produces random floating-point values x , uniformly distributed on the interval [a,b), 
-    // that is, distributed according to the probability density function:
-    // P(x|a,b) = 1/b-a
-    static std::mt19937 generator;
-    //A Mersenne Twister pseudo-random generator of 32-bit numbers with a state size of 19937 bits.
-    return distribution(generator);
+inline double random_double() {
+    // Returns a random real in [0,1).
+    return rand() / (RAND_MAX + 1.0);
 }
+
+// inline double random_double(){
+//     static std::uniform_real_distribution<double> distribution(0.0,1.0); 
+//     //Produces random floating-point values x , uniformly distributed on the interval [a,b), 
+//     // that is, distributed according to the probability density function:
+//     // P(x|a,b) = 1/b-a
+//     static std::mt19937 generator;
+//     //A Mersenne Twister pseudo-random generator of 32-bit numbers with a state size of 19937 bits.
+//     return distribution(generator);
+// }
 
 inline double random_double(double min, double max) {
     // Returns a random real in [min,max).
