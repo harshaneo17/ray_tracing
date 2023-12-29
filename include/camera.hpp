@@ -104,7 +104,7 @@ class Camera{
 
             //if ray bounce limit is exceeded return 0,0,0
             if (depth <= 0)
-                return Color(0,0,0)
+                return Color(0,0,0);
 
             if (world.trace(r,Interval(0.001,infinity),rec)){
                 Vec3 direction = random_on_hemisphere(rec.normal);
