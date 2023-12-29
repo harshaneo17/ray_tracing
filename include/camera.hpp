@@ -12,6 +12,7 @@ class Camera{
         double aspect_ratio = 1.0;  // Ratio of image width over height
         int    image_width  = 100;  // Rendered image width in pixel count
         int    samples_per_pixel = 10; //Count of random samples for each pixel
+        int    max_depth = 10;
 
 
         void render(const Traced& world){
@@ -24,7 +25,7 @@ class Camera{
                     Color pixel_color(0,0,0);
                     for (int sample = 0;sample < samples_per_pixel; ++sample){
                         Ray r = get_ray(i,j);
-                        pixel_color += ray_color(r, world);
+                        pixel_color += ray_color(r,max_depth, world);
                     }
                     write_color(std::cout, pixel_color, samples_per_pixel); //this method is described in color.hpp
                 // static_cast<target type> (expression)
@@ -91,7 +92,7 @@ class Camera{
             return (px * pixel_delta_u) + (py * pixel_delta_v);
         }
 
-        Color ray_color(const Ray& r,const Traced& world) const {
+        Color ray_color(const Ray& r,int depth,const Traced& world) const {
         /*
         color of ray. each pixel coordinate corresponding to a Color object which is multiplied with 255
         to ensure the color values are normalized. Not sure what normalized means here but ill come back to this.
@@ -101,9 +102,13 @@ class Camera{
         */
             TraceRecord rec;
 
-            if (world.trace(r,Interval(0,infinity),rec)){
+            //if ray bounce limit is exceeded return 0,0,0
+            if (depth <= 0)
+                return Color(0,0,0)
+
+            if (world.trace(r,Interval(0.001,infinity),rec)){
                 Vec3 direction = random_on_hemisphere(rec.normal);
-                return 0.5 * ray_color(Ray(rec.p, direction), world);
+                return 0.5 * ray_color(Ray(rec.p, direction),depth - 1, world);
             }
         
             Vec3 unit_direction = unit_vector(r.direction());
