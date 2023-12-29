@@ -3,7 +3,7 @@
 
 #include "mainheader.hpp"
 
-using Color = Vec3;
+// using Color = Vec3;
 
 class TraceRecord; //this is to ensure compiler knows class something is defined and we shall write it later
 
@@ -32,6 +32,7 @@ class Lambertian : public Material {
                 scatter_direction = rec.normal;
 
             scattered = Ray(rec.p, scatter_direction);
+            attenuation = albedo;
             return true;
 
         }
@@ -41,18 +42,19 @@ class Lambertian : public Material {
 
 class Metal: public Material {
     public:
-        Metal(const Color& a): albedo(a) {}
+        Metal(const Color& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {}
 
         bool scatter(const Ray& r_in, const TraceRecord& rec, Color& attenuation, Ray& scattered)
         const override {
             Vec3 reflected = reflect(unit_vector(r_in.direction()), rec.normal);
-            scattered = Ray(rec.p, reflected);
+            scattered = Ray(rec.p, reflected + fuzz*random_unit_vector());
             attenuation = albedo;
-            return true;
+            return (dot(scattered.direction(),rec.normal) > 0);
         }
 
     private:
         Color albedo;
+        double fuzz;
 
 };
 

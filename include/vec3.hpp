@@ -77,7 +77,7 @@ class Vec3 {
     bool near_zero() const {
         //Return true if vector is close to zero in all dimentions
         auto s = 1e-8;
-        return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
+        return (std::fabs(e[0]) < s) && (std::fabs(e[1]) < s) && (std::fabs(e[2]) < s);
     }
 
     double magnitude() const {
