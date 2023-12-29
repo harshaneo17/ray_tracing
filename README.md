@@ -48,3 +48,10 @@ Diffuse objects that don’t emit their own light merely take on the color of th
 <u> If the Vec3 class uses float instead of double then you see a strange pattern on the rendered sphere. I would like to continue with that till the end to see the difference it makes to the engine </u>
 
 Shadow acne is when the intersection point of ray and object are not really on the object. Sometimes its below or above the obejct. It can cause the bouncing rays is unlikely to be perfectly off from the surface.
+
+
+There are types of reflections:
+
+Lambertian reflectance is the property that defines an ideal "matte" or diffusely reflecting surface. The apparent brightness of a Lambertian surface to an observer is the same regardless of the observer's angle of view.[1] More precisely, the reflected radiant intensity obeys Lambert's cosine law, which makes the reflected radiance the same in all directions
+
+In optics, Lambert's cosine law says that the radiant intensity or luminous intensity observed from an ideal diffusely reflecting surface or ideal diffuse radiator is directly proportional to the cosine of the angle θ between the observer's line of sight and the surface normal; I = Io cos θ.[1][2] The law is also known as the cosine emission law[3] or Lambert's emission law
