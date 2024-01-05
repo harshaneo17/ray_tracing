@@ -178,6 +178,7 @@ inline Vec3 refract(const Vec3& uv,const Vec3& n,double etai_over_etat){
     //fmin takes two arguements and returns the smallest of them
     Vec3 r_out_perp =  etai_over_etat * (uv + cos_theta * n);
     Vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * n;
+    // refer to my notes for explanation
     return r_out_perp + r_out_parallel;
 }
 

@@ -14,7 +14,11 @@ class Camera{
         int    image_width  = 100;  // Rendered image width in pixel count
         int    samples_per_pixel = 10; //Count of random samples for each pixel
         int    max_depth = 10;
-
+        
+        double vfov = 90; //field of view
+        Point3 lookfrom = Point3(0,0,-1);
+        Point3 lookat = Point3(0,0,0);
+        Vec3 cam_vertical_up = Vec3(0,1,0);
 
         void render(const Traced& world){
             initialize();
@@ -45,6 +49,7 @@ class Camera{
         Point3 pixel_origin;    // Location of pixel 0, 0
         Vec3   pixel_delta_u;  // Offset to pixel to the right
         Vec3   pixel_delta_v;  // Offset to pixel below
+        Vec3   u, v, w;
 
         void initialize(){
             //Calculate image height from aspect ratio and width
@@ -53,23 +58,30 @@ class Camera{
             /* the english translation of above terinary operator means
             image height is 1 if image height is less than one else image height stays the same
             */
-            camera_center = Point3(0,0,0);
+            camera_center = lookfrom;
 
             //camera
-            auto focal_length = 1.0;
-            auto viewport_height = 2.0;
+            auto focal_length = (lookfrom - lookat).length();
+            auto theta = degrees_to_radians(vfov);
+            auto h = tan(theta/2);
+            auto viewport_height = 2 * h * focal_length;
             auto viewport_width = viewport_height * (static_cast<double>(image_width)/image_height);
 
+            // Calculate the u,v,w unit basis vectors for the camera coordinate frame
+            w = unit_vector(lookfrom - lookat);
+            u = unit_vector(cross(cam_vertical_up,w));
+            v = cross(w, u);
+
             //calculate the vectors that navigate on the viewport
-            auto viewport_u = Vec3(viewport_width, 0, 0);
-            auto viewport_v = Vec3(0,-viewport_height,0); //why negative?
+            Vec3 viewport_u = viewport_width * u;
+            Vec3 viewport_v = viewport_height * -v; //why negative?
 
             //calculate the difference in pixel to pixel (Delta v)
             pixel_delta_u = viewport_u / image_width;
             pixel_delta_v = viewport_v / image_height;
 
             //calculate the location of the upper left pixel
-            auto viewport_upper_left = camera_center - Vec3(0,0,focal_length) - viewport_u/2 - viewport_v/2;
+            auto viewport_upper_left = camera_center - (focal_length * w) - viewport_u/2 - viewport_v/2;
             pixel_origin = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
         }
