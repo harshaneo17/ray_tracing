@@ -72,4 +72,6 @@ notice that the 50% reflectance render (the one in the middle) is far too dark t
 
 We are going to transform our data into gamma space so that our image viewer can more accurately display our image. As a simple approximation, we can use “gamma 2” as our transform, which is the power that you use when going from gamma space to linear space. We need to go from linear space to gamma space, which means taking the inverse of “gamma 2", which means an exponent of 1/gamma, which is just the square-root
 
-need to edit a video with these notes
+defocus blur. Note, photographers call this depth of field,
+
+We call the distance between the camera center and the plane where everything is in perfect focus the focus distance. Be aware that the focus distance is not usually the same as the focal length — the focal length is the distance between the camera center and the image plane
