@@ -13,12 +13,15 @@ class Camera{
         double aspect_ratio = 1.0;  // Ratio of image width over height
         int    image_width  = 100;  // Rendered image width in pixel count
         int    samples_per_pixel = 10; //Count of random samples for each pixel
-        int    max_depth = 10;
+        int    max_depth = 10; // Maximum number of ray bounces into scene
         
         double vfov = 90; //field of view
         Point3 lookfrom = Point3(0,0,-1);
         Point3 lookat = Point3(0,0,0);
         Vec3 cam_vertical_up = Vec3(0,1,0);
+
+        double defocus_angle = 0; //variation angle of rays through each pixel
+        double focus_dist = 10;  // Distance from camera
 
         void render(const Traced& world){
             initialize();
@@ -49,7 +52,10 @@ class Camera{
         Point3 pixel_origin;    // Location of pixel 0, 0
         Vec3   pixel_delta_u;  // Offset to pixel to the right
         Vec3   pixel_delta_v;  // Offset to pixel below
-        Vec3   u, v, w;
+        Vec3   u, v, w; //Camera frame vectors
+        Vec3   defocus_disk_h; //defocus disk horizontal radius
+        Vec3   defocus_disk_v; //defocus disk vertical radius
+        // horizontal and vertical because elliptical disk
 
         void initialize(){
             //Calculate image height from aspect ratio and width
@@ -61,10 +67,9 @@ class Camera{
             camera_center = lookfrom;
 
             //camera
-            auto focal_length = (lookfrom - lookat).length();
             auto theta = degrees_to_radians(vfov);
             auto h = tan(theta/2);
-            auto viewport_height = 2 * h * focal_length;
+            auto viewport_height = 2 * h * focus_dist;
             auto viewport_width = viewport_height * (static_cast<double>(image_width)/image_height);
 
             // Calculate the u,v,w unit basis vectors for the camera coordinate frame
@@ -81,18 +86,24 @@ class Camera{
             pixel_delta_v = viewport_v / image_height;
 
             //calculate the location of the upper left pixel
-            auto viewport_upper_left = camera_center - (focal_length * w) - viewport_u/2 - viewport_v/2;
+            auto viewport_upper_left = camera_center - (focus_dist * w) - viewport_u/2 - viewport_v/2;
             pixel_origin = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
+
+            //calculate the camera defocus disk basis vectors
+            auto defocus_radius = focus_dist * tan(degrees_to_radians(defocus_angle / 2));
+            defocus_disk_h = u * defocus_radius;
+            defocus_disk_v = v * defocus_radius;
 
         }
 
         Ray get_ray(int i, int j) const {
             //Get a randomly sampled camera ray for the pixel at location i,j
+            //originating from camera defocus disk
 
             auto pixel_center = pixel_origin + (i * pixel_delta_u) + (j * pixel_delta_v);
             auto pixel_sample = pixel_center + pixel_sample_square();
 
-            auto ray_origin = camera_center;
+            auto ray_origin = (defocus_angle <= 0) ? camera_center : defocus_disk_sample();
             auto ray_direction = pixel_sample - ray_origin;
 
             return Ray(ray_origin, ray_direction);
@@ -103,6 +114,12 @@ class Camera{
             auto px = -0.5 + random_double();
             auto py = -0.5 + random_double();
             return (px * pixel_delta_u) + (py * pixel_delta_v);
+        }
+
+        Point3 defocus_disk_sample() const {
+            //Returns a random point in the camera defocus disk
+            auto p = random_in_unit_disk();
+            return camera_center + (p[0] * defocus_disk_h) + (p[1] * defocus_disk_v);
         }
 
         Color ray_color(const Ray& r,int depth,const Traced& world) const {

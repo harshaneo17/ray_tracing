@@ -75,3 +75,5 @@ We are going to transform our data into gamma space so that our image viewer can
 defocus blur. Note, photographers call this depth of field,
 
 We call the distance between the camera center and the plane where everything is in perfect focus the focus distance. Be aware that the focus distance is not usually the same as the focal length — the focal length is the distance between the camera center and the image plane
+
+A slightly easier parameter is to specify the angle of the cone with apex (tip) at viewport center and base (defocus disk) at the camera center.
