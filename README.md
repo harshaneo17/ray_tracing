@@ -41,6 +41,10 @@ make -C build/ (linux,mac)
 
 <img src="images/image9.jpg" width="800">
 
+# Final Results
+
+<img src="images/image_final.jpg"> width="800">
+
 # Anti Aliasing
 
 Anti aliasing means decreasings aliasing. Since pixels are rectangle (or) square the objects that have curves on them or splines are difficult to render or they are usually jagged. In order to prevent this anti aliasing techniques are implemented.
