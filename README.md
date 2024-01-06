@@ -43,7 +43,7 @@ make -C build/ (linux,mac)
 
 # Final Results
 
-<img src="images/image_final.jpg"> width="800">
+<img src="images/image_final.jpg" width="800">
 
 # Anti Aliasing
 
